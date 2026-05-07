@@ -12,9 +12,9 @@ public class Tarea{
     private String prioridad;
     private BigDecimal progreso;
     private String estado;
-    private LocalDateTime fechaCreacion;
     private List<String> actividades;
     private int id;
+    private String fechaCreacion;
 
     //Constructor para registros
     public Tarea (String modulo, String titulo, String descripcion, String prioridad) {
@@ -25,12 +25,11 @@ public class Tarea{
         this.prioridad = prioridad;
         this.progreso = BigDecimal.ZERO;
         this.estado = "En proceso";
-        this.fechaCreacion = LocalDateTime.now();
         this.actividades = new ArrayList<>();
     }
 
     //Constructor para consultas
-    public Tarea(int id, String modulo, String titulo, String descripcion, String prioridad, BigDecimal progreso, String estado){
+    public Tarea(int id, String modulo, String titulo, String descripcion, String prioridad, BigDecimal progreso, String estado, String fecha_Creacion){
         this.id = id;
         this.modulo = modulo;
         this.titulo = titulo;
@@ -38,6 +37,7 @@ public class Tarea{
         this.prioridad = prioridad;
         this.progreso = progreso;
         this.estado = estado;
+        this.fechaCreacion = fecha_Creacion;
 
     }
     //Metódos de lógica
@@ -62,8 +62,9 @@ public class Tarea{
     public String getDescripcion () { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public String getPrioridad() { return prioridad; }
-    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
     public List<String> getActividades() { return actividades; }
+    public String fechaCreacion() { return fechaCreacion; }
+
 @Override
 public String toString(){
     return String.format (
@@ -71,8 +72,9 @@ public String toString(){
                     "ID: %d | Módulo: [%s]\n" +
                     "Título: %s\n" +
                     "Prioridad: %s | Progreso: %.2f%%\n" +
-                    "Estado: %s\n",
-            id, modulo, titulo,prioridad, progreso, estado
+                    "Estado: %s\n" +
+                    "Tarea creada el: %s",
+            id, modulo, titulo,prioridad, progreso, estado, fechaCreacion
     );
 }
 }

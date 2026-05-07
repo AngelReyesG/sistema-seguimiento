@@ -74,7 +74,8 @@ public class TareaDAO {
                         rs.getString("descripcion"),
                         rs.getString("prioridad"),
                         rs.getBigDecimal("progreso"),
-                        rs.getString("estado")
+                        rs.getString("estado"),
+                        rs.getString("fecha_creacion")
                 );
 
 
@@ -111,7 +112,8 @@ public class TareaDAO {
                         rs.getString("modulo"),
                         rs.getString("prioridad"),
                         rs.getBigDecimal("progreso"),
-                        rs.getString("estado")
+                        rs.getString("estado"),
+                        rs.getString("fecha_Creacion")
                 );
                 filtradas.add(t);
             }
@@ -139,7 +141,8 @@ public class TareaDAO {
                         rs.getString("descripcion"),
                         rs.getString("prioridad"),
                         rs.getBigDecimal("progreso"),
-                        rs.getString("estado")
+                        rs.getString("estado"),
+                        rs.getString("fecha_Creacion")
                 );
                 filtradaPorId.add(t);
                 }
