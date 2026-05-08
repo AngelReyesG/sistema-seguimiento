@@ -4,7 +4,7 @@ import java.util.List;
 public class TareaService {
     private TareaDAO dao = new TareaDAO();
 
-    public boolean registrarNuevaTarea(Tarea t) {
+    public boolean validarTarea(Tarea t) {
         //Titulo not null
         if (t.getTitulo() == null || t.getTitulo().trim().isEmpty()) {
             System.out.println("SS ERROR: FAVOR DE INGRESAR UN TÍTULO");
@@ -17,6 +17,12 @@ public class TareaService {
             return false;
         }
 
+        //Prioridad sea permitida
+        String p = t.getPrioridad().toLowerCase();
+        if (!p.equals("alta") && !p.equals("media") && !p.equals("baja")) {
+            System.out.println("SS ERROR: PRIORIDAD NO VÁLIDA.");
+            return false;
+        }
         dao.guardarTarea(t);
         return true;
     }
