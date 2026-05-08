@@ -6,7 +6,7 @@ import java.util.List;
 public class Tarea{
 
     //Atributos de la tarea
-    private String modulo;
+    private Modulo modulo;
     private String titulo;
     private String descripcion;
     private String prioridad;
@@ -17,7 +17,7 @@ public class Tarea{
     private String fechaCreacion;
 
     //Constructor para registros
-    public Tarea (String modulo, String titulo, String descripcion, String prioridad) {
+    public Tarea (Modulo modulo, String titulo, String descripcion, String prioridad) {
         this.id = id;
         this.modulo = modulo;
         this.titulo = titulo;
@@ -29,7 +29,7 @@ public class Tarea{
     }
 
     //Constructor para consultas
-    public Tarea(int id, String modulo, String titulo, String descripcion, String prioridad, BigDecimal progreso, String estado, String fecha_Creacion){
+    public Tarea(int id, Modulo modulo, String titulo, String descripcion, String prioridad, BigDecimal progreso, String estado, String fecha_Creacion){
         this.id = id;
         this.modulo = modulo;
         this.titulo = titulo;
@@ -54,9 +54,8 @@ public class Tarea{
 
 
     //Getters y Setters
-    public String getModulo () { return modulo; }
+    public Modulo getModulo () { return modulo; }
     public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
     public String getEstado() { return estado; }
     public BigDecimal getProgreso() { return progreso; }
     public String getDescripcion () { return descripcion; }
@@ -64,6 +63,8 @@ public class Tarea{
     public String getPrioridad() { return prioridad; }
     public List<String> getActividades() { return actividades; }
     public String fechaCreacion() { return fechaCreacion; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public void setModulo(Modulo modulo) { this.modulo = modulo; }
 
 @Override
 public String toString(){

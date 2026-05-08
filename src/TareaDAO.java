@@ -18,7 +18,6 @@ public class TareaDAO {
         try (Connection con = ConexionDB.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-
             ps.setString(1, tarea.getModulo());
             ps.setString(2, tarea.getTitulo());
             ps.setString(3, tarea.getDescripcion());
@@ -33,6 +32,8 @@ public class TareaDAO {
             System.out.printf("Error al guardar:" + e.getMessage());
         }
     }
+
+    //Metodo para actualizar progreso de tareas
     public void actualizarProgreso (int idTarea, double nuevoProgreso) {
         String sql = "UPDATE tareas SET progreso = ?, estado = ? WHERE id = ?";
 
@@ -57,19 +58,19 @@ public class TareaDAO {
     //Metodo para consultar las tareas
     public List<Tarea> listarTareas(){
         List<Tarea> lista = new ArrayList<>();
-        String sql = "SELECT * FROM tareas";
-
+        String sql = "SELECT * FROM tareas" + " ORDER BY FIELD(prioridad, 'Alta', 'Media', 'Baja'), fecha_creacion DESC";
 
         try (Connection con = ConexionDB.conectar();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
-
             while (rs.next()) {
+                String nombreModulo = rs.getString("modulo");
+                Modulo moduloEnum = Modulo.valueOf(nombreModulo.toUpperCase());
                 //Creacion de tarea con datos de la tabla
                 Tarea t = new Tarea(
                         rs.getInt("id"),
-                        rs.getString("modulo"),
+                        moduloEnum,
                         rs.getString("titulo"),
                         rs.getString("descripcion"),
                         rs.getString("prioridad"),
@@ -78,10 +79,8 @@ public class TareaDAO {
                         rs.getString("fecha_creacion")
                 );
 
-
                 //setear el progreso y estado
                 lista.add(t);
-
 
             }
         }catch (SQLException e) {
@@ -90,19 +89,16 @@ public class TareaDAO {
         return lista;
     }
 
-
+    //Metodo para consultar tareas por módulo
     public List<Tarea> obtenerTareasPorModulo(String nombreModulo) {
         List<Tarea> filtradas = new ArrayList<>();
-        String sql = "SELECT * FROM tareas WHERE modulo = ?";
-
+        String sql = "SELECT * FROM tareas WHERE modulo = ?" + " ORDER BY FIELD(prioridad 'Alta', 'Media', 'Baja'), fecha_creacion DESC";
 
         try (Connection con = ConexionDB.conectar();
              PreparedStatement ps = con.prepareStatement(sql)){
 
-
             ps.setString(1, nombreModulo);
             ResultSet rs = ps.executeQuery ();
-
 
             while (rs.next()){
                 Tarea t = new Tarea(

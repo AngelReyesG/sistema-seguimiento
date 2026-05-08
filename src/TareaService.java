@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class TareaService {
     private TareaDAO dao = new TareaDAO();
 
@@ -16,6 +19,14 @@ public class TareaService {
 
         dao.guardarTarea(t);
         return true;
+    }
+
+    public List<Tarea> obtenerTareasPorModulo(String modulo) {
+        if (modulo == null || modulo.isEmpty()) {
+            System.out.println("SS Error: Debe especificar un módulo.");
+            return new ArrayList<>();
+        }
+        return dao.obtenerTareasPorModulo(modulo);
     }
 
 }

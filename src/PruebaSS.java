@@ -32,20 +32,21 @@ public class PruebaSS {
                 case 1:
                     System.out.println("\n--- NUEVA TAREA ---");
                     System.out.println("Módulo de actividad: ");
-                    String modulo = lector.nextLine();
-
+                    for (int i = 0; i < Modulo.values().length; i++) {
+                        System.out.println((i + 1) + ". " + Modulo.values()[i]);
+                    }
+                    int opcion = lector.nextInt();
+                    Modulo seleccionado = Modulo.values()[opcion - 1];
+                    dao.obtenerTareasPorModulo(seleccionado.name());
 
                     System.out.println("Título: ");
                     String titulo = lector.nextLine();
 
-
                     System.out.println("Descripción: ");
                     String descripcion = lector.nextLine();
 
-
                     System.out.println("Prioridad (Alta/Media/Baja): ");
                     String prioridad = lector.nextLine();
-
 
                     Tarea nueva = new Tarea(modulo, titulo, descripcion, prioridad);
                     service.registrarNuevaTarea(nueva);
@@ -94,7 +95,7 @@ public class PruebaSS {
                     dao.actualizarProgreso(id, avance);
                     break;
                 case 5:
-                    System.out.print("¿Que tarea deseas consultar:");
+                    System.out.print("¿Que tarea deseas consultar: ");
                     id = lector.nextInt();
                     filtradasPorId = dao.obtenerTareaPorId(id);
                     if(filtradasPorId.isEmpty()) {
@@ -117,44 +118,7 @@ public class PruebaSS {
 
 
         lector.close();
-       /*TareaDAO dao = new TareaDAO();
 
-
-       Llamar al metodo para ejecutar el INSERT
-       dao.guardarTarea(pendienteCostos);*/
-
-
-       /*Realizar acción
-       pendienteCostos.agregarActividad("Actualizar entradas y salidas de almacén", new java.math.BigDecimal("75.00"));
-       pendienteJuridico.agregarActividad("Reunión de trabajo 21/04/2026", new java.math.BigDecimal("100.00"));*/
-
-
-        //Consultar resultado (no es void, debe devolver datos)
-       /*System.out.println("--- ESTADO DEL SISTEMA ---");
-       System.out.println("Módulo: " + pendienteCostos.getModulo());
-       System.out.println("Tarea: " + pendienteCostos.getTitulo());
-       System.out.println("Actividades realizadas: " + pendienteCostos.getActividades());
-       System.out.println("Progreso: " + pendienteCostos.getProgreso() + "%");
-       System.out.println("Estado: " + pendienteCostos.getEstado());*/
-
-
-       /*Mostrar lista
-       TareaDAO show = new TareaDAO();
-       List<Tarea> pendientes = show.listarTareas();
-
-
-       System.out.println("=== PENDIENTES SISTEMA DE SEGUIMIENTO ===");
-
-
-       //ciclo
-       for (Tarea t : pendientes){
-           System.out.println("Módulo: " + t.getModulo() + " Tarea: " + t.getTitulo() + " Prioridad: " + t.getPrioridad());
-           System.out.println("Descripción: " + t.getDescripcion());
-           System.out.println("Actividades realizadas: " + t.getActividades());
-           System.out.println("Progreso: " + t.getProgreso());
-
-
-       }*/
     }
 
 
