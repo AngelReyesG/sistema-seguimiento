@@ -14,19 +14,16 @@ public class TareaDAO {
     public void guardarTarea(Tarea tarea){
         String sql = "INSERT INTO tareas (modulo, titulo, descripcion, prioridad) VALUES (?, ?, ?, ?)";
 
-
         try (Connection con = ConexionDB.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, tarea.getModulo());
+            ps.setString(1, tarea.getModulo().name());
             ps.setString(2, tarea.getTitulo());
             ps.setString(3, tarea.getDescripcion());
             ps.setString(4, tarea.getPrioridad());
 
-
             ps.executeUpdate();
             System.out.printf("¡Tarea guardada con éxito!\n");
-
 
         } catch (SQLException e){
             System.out.printf("Error al guardar:" + e.getMessage());
@@ -90,22 +87,23 @@ public class TareaDAO {
     }
 
     //Metodo para consultar tareas por módulo
-    public List<Tarea> obtenerTareasPorModulo(String nombreModulo) {
+    public List<Tarea> obtenerTareasPorModulo(String moduloBusqueda) {
         List<Tarea> filtradas = new ArrayList<>();
         String sql = "SELECT * FROM tareas WHERE modulo = ?" + " ORDER BY FIELD(prioridad 'Alta', 'Media', 'Baja'), fecha_creacion DESC";
 
         try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)){
-
-            ps.setString(1, nombreModulo);
+            PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery ();
 
             while (rs.next()){
+                String nombreModulo = rs.getString("modulo");
+                Modulo moduloEnum = Modulo.valueOf(nombreModulo.toUpperCase());
+
                 Tarea t = new Tarea(
                         rs.getInt("id"),
+                        moduloEnum,
                         rs.getString("titulo"),
                         rs.getString("descripcion"),
-                        rs.getString("modulo"),
                         rs.getString("prioridad"),
                         rs.getBigDecimal("progreso"),
                         rs.getString("estado"),
@@ -130,9 +128,12 @@ public class TareaDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){
+                String nombreModulo = rs.getString("modulo");
+                Modulo moduloenum = Modulo.valueOf(nombreModulo.toUpperCase());
+
                 Tarea t = new Tarea(
                         rs.getInt("id"),
-                        rs.getString("modulo"),
+                        moduloenum,
                         rs.getString("titulo"),
                         rs.getString("descripcion"),
                         rs.getString("prioridad"),

@@ -31,24 +31,26 @@ public class PruebaSS {
             switch (opcion) {
                 case 1:
                     System.out.println("\n--- NUEVA TAREA ---");
-                    System.out.println("Módulo de actividad: ");
+                    System.out.println("MÓDULOS DE ACTIVIDADES");
+                    //Mostrar opciones desde el Enum
                     for (int i = 0; i < Modulo.values().length; i++) {
                         System.out.println((i + 1) + ". " + Modulo.values()[i]);
                     }
-                    int opcion = lector.nextInt();
-                    Modulo seleccionado = Modulo.values()[opcion - 1];
-                    dao.obtenerTareasPorModulo(seleccionado.name());
+                    opcion = lector.nextInt();
+                    lector.nextLine();
 
-                    System.out.println("Título: ");
+                    Modulo seleccionado = Modulo.values()[opcion - 1];
+
+                    System.out.print("Título: ");
                     String titulo = lector.nextLine();
 
-                    System.out.println("Descripción: ");
+                    System.out.print("Descripción: ");
                     String descripcion = lector.nextLine();
 
-                    System.out.println("Prioridad (Alta/Media/Baja): ");
+                    System.out.print("Prioridad (Alta/Media/Baja): ");
                     String prioridad = lector.nextLine();
 
-                    Tarea nueva = new Tarea(modulo, titulo, descripcion, prioridad);
+                    Tarea nueva = new Tarea(seleccionado, titulo, descripcion, prioridad);
                     service.registrarNuevaTarea(nueva);
                     break;
 
