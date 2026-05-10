@@ -1,5 +1,4 @@
 import com.mysql.cj.protocol.Resultset;
-
 import javax.swing.*;
 import javax.xml.transform.Result;
 import java.sql.*;
@@ -20,7 +19,7 @@ public class TareaDAO {
             ps.setString(1, tarea.getModulo().name());
             ps.setString(2, tarea.getTitulo());
             ps.setString(3, tarea.getDescripcion());
-            ps.setString(4, tarea.getPrioridad());
+            ps.setString(4, tarea.getPrioridad().name());
 
             ps.executeUpdate();
             System.out.printf("¡Tarea guardada con éxito!\n");
@@ -64,13 +63,16 @@ public class TareaDAO {
             while (rs.next()) {
                 String nombreModulo = rs.getString("modulo");
                 Modulo moduloEnum = Modulo.valueOf(nombreModulo.toUpperCase());
+
+                String prioridadBD = rs.getString("prioridad");
+                Prioridad prioridadEnum = Prioridad.valueOf(prioridadBD.toUpperCase());
                 //Creacion de tarea con datos de la tabla
                 Tarea t = new Tarea(
                         rs.getInt("id"),
                         moduloEnum,
                         rs.getString("titulo"),
                         rs.getString("descripcion"),
-                        rs.getString("prioridad"),
+                        prioridadEnum,
                         rs.getBigDecimal("progreso"),
                         rs.getString("estado"),
                         rs.getString("fecha_creacion")
@@ -99,12 +101,15 @@ public class TareaDAO {
                 String nombreModulo = rs.getString("modulo");
                 Modulo moduloEnum = Modulo.valueOf(nombreModulo.toUpperCase());
 
+                String prioridadBD = rs.getString("prioridad");
+                Prioridad prioridadEnum = Prioridad.valueOf(prioridadBD.toUpperCase());
+
                 Tarea t = new Tarea(
                         rs.getInt("id"),
                         moduloEnum,
                         rs.getString("titulo"),
                         rs.getString("descripcion"),
-                        rs.getString("prioridad"),
+                        prioridadEnum,
                         rs.getBigDecimal("progreso"),
                         rs.getString("estado"),
                         rs.getString("fecha_Creacion")
@@ -131,12 +136,15 @@ public class TareaDAO {
                 String nombreModulo = rs.getString("modulo");
                 Modulo moduloenum = Modulo.valueOf(nombreModulo.toUpperCase());
 
+                String prioridadBD = rs.getString("prioridad");
+                Prioridad prioridadEnum = Prioridad.valueOf(prioridadBD.toUpperCase());
+
                 Tarea t = new Tarea(
                         rs.getInt("id"),
                         moduloenum,
                         rs.getString("titulo"),
                         rs.getString("descripcion"),
-                        rs.getString("prioridad"),
+                        prioridadEnum,
                         rs.getBigDecimal("progreso"),
                         rs.getString("estado"),
                         rs.getString("fecha_Creacion")
